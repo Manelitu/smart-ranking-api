@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Get, Query } from '@nestjs/common';
 import { CreatePlayerDTO } from './dtos/create-player.dto';
 import { CreatePlayer } from './usecases/create-player';
-import { ListUsersDTO } from './dtos/list-users.dto';
-import { ListUsers } from './usecases/list-users';
+import { ListPlayersDTO } from './dtos/list-players.dto';
+import { ListUsers } from './usecases/list-players';
 
 @Controller('api/v1/players')
 export class PlayersController {
@@ -18,7 +18,7 @@ export class PlayersController {
   }
 
   @Get()
-  async list(@Query() listUsersDTO: ListUsersDTO) {
-    return this.listUsers.execute(listUsersDTO);
+  async list(@Query() listPlayersDTO: ListPlayersDTO) {
+    return this.listUsers.execute(listPlayersDTO);
   }
 }

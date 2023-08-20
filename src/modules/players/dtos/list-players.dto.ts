@@ -1,6 +1,6 @@
 import { IsString, IsOptional } from 'class-validator';
 
-export class ListUsersDTO {
+export class ListPlayersDTO {
   @IsOptional()
   @IsString()
   page: number;
