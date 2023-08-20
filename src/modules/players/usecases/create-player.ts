@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePlayerMapper } from '@/modules/players/mappers/create-player.mapper';
 import { UseCase } from '@/base';
 import { CreatePlayerDTO } from '../dtos/create-player.dto';
-import { PlayerEntity } from '@/entities/players.entity';
+import { PlayerEntity } from '@/core/entities/players.entity';
 
 @Injectable()
 export class CreatePlayer implements UseCase<PlayerEntity> {
