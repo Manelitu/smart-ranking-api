@@ -13,7 +13,7 @@ export class PlayersController {
 
   @Post()
   async saveAndUpdate(@Body() createPlayerDTO: CreatePlayerDTO) {
-    const response = this.createPlayer.execute(createPlayerDTO);
+    const response = await this.createPlayer.execute(createPlayerDTO);
     return JSON.stringify(response);
   }
 
