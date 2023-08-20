@@ -7,7 +7,6 @@ export class CreatePlayerMapper extends Mapper<CreatePlayerDTO, PlayerEntity> {
   mapFrom(param: CreatePlayerDTO): PlayerEntity {
     const playerEntity = new PlayerEntity();
     copyProperties(param, playerEntity);
-    console.log(playerEntity);
     return playerEntity;
   }
 
