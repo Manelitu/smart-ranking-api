@@ -8,4 +8,5 @@ export class PlayerEntity extends Entity {
   public ranking: string;
   public rankingPosition: number;
   public image: string;
+  public inactive: boolean;
 }

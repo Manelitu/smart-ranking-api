@@ -10,6 +10,7 @@ export const playerSchema = new mongoose.Schema(
     ranking: String,
     rankingPosition: Number,
     image: String,
+    inactive: { type: Boolean, default: false },
   },
   mongooseConfig,
 );

@@ -1,24 +1,49 @@
-import { Body, Controller, Post, Get, Query } from '@nestjs/common';
-import { CreatePlayerDTO } from './dtos/create-player.dto';
-import { CreatePlayer } from './usecases/create-player';
-import { ListPlayersDTO } from './dtos/list-players.dto';
-import { ListUsers } from './usecases/list-players';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Query,
+  Delete,
+  Param,
+} from '@nestjs/common';
+import { CreatePlayerDTO, ListPlayersDTO } from './dtos';
+import { PlayerEntity } from '../../core/entities/players.entity';
+import {
+  ListPlayerById,
+  DeletePlayer,
+  ListPlayers,
+  CreatePlayer,
+} from './usecases';
 
 @Controller('api/v1/players')
 export class PlayersController {
   constructor(
     private createPlayer: CreatePlayer,
-    private listUsers: ListUsers,
+    private listPlayers: ListPlayers,
+    private deletePlayer: DeletePlayer,
+    private listPlayerById: ListPlayerById,
   ) {}
 
   @Post()
-  async saveAndUpdate(@Body() createPlayerDTO: CreatePlayerDTO) {
-    const response = await this.createPlayer.execute(createPlayerDTO);
-    return JSON.stringify(response);
+  async saveAndUpdate(
+    @Body() createPlayerDTO: CreatePlayerDTO,
+  ): Promise<PlayerEntity> {
+    return this.createPlayer.execute(createPlayerDTO);
   }
 
   @Get()
-  async list(@Query() listPlayersDTO: ListPlayersDTO) {
-    return this.listUsers.execute(listPlayersDTO);
+  async list(@Query() listPlayersDTO: ListPlayersDTO): Promise<PlayerEntity[]> {
+    return this.listPlayers.execute(listPlayersDTO);
+  }
+
+  @Get('/:id')
+  async listById(@Param('id') id: string): Promise<PlayerEntity> {
+    return this.listPlayerById.execute(id);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: string): Promise<PlayerEntity> {
+    return this.deletePlayer.execute(id);
   }
 }

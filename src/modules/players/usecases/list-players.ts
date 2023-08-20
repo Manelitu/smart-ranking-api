@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class ListUsers implements UseCase<PlayerEntity> {
+export class ListPlayers implements UseCase<PlayerEntity> {
   constructor(
     @InjectModel('Player') private readonly playerModel: Model<PlayerEntity>,
   ) {}
