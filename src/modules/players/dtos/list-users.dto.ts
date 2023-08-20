@@ -1,11 +1,11 @@
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
 export class ListUsersDTO {
   @IsOptional()
-  @IsNumber()
+  @IsString()
   page: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   limit: string;
 }

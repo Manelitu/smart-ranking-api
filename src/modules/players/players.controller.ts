@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query } from '@nestjs/common';
 import { CreatePlayerDTO } from './dtos/create-player.dto';
 import { CreatePlayer } from './usecases/create-player';
 import { ListUsersDTO } from './dtos/list-users.dto';
@@ -17,7 +17,8 @@ export class PlayersController {
     return JSON.stringify(response);
   }
 
-  async list(@Body() listUsersDTO: ListUsersDTO) {
+  @Get()
+  async list(@Query() listUsersDTO: ListUsersDTO) {
     return this.listUsers.execute(listUsersDTO);
   }
 }
