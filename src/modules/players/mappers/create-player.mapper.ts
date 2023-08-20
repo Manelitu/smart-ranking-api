@@ -1,7 +1,7 @@
-import { Mapper } from '../../base/mapper';
-import { CreatePlayerDTO } from '../../modules/players/dtos/create-player.dto';
-import { PlayerEntity } from '../../modules/players/entities/players.entity';
-import { copyProperties } from '../copyProperties';
+import { Mapper } from '@/base/mapper';
+import { CreatePlayerDTO } from '@/modules/players/dtos/create-player.dto';
+import { PlayerEntity } from '@/modules/players/entities/players.entity';
+import { copyProperties } from '../../../helpers/copyProperties';
 
 export class CreatePlayerMapper extends Mapper<CreatePlayerDTO, PlayerEntity> {
   mapFrom(param: CreatePlayerDTO): PlayerEntity {
