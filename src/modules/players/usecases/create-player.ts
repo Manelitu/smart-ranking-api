@@ -3,17 +3,27 @@ import { CreatePlayerMapper } from '@/modules/players/mappers/create-player.mapp
 import { UseCase } from '@/base';
 import { CreatePlayerDTO } from '../dtos/create-player.dto';
 import { PlayerEntity } from '@/core/entities/players.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class CreatePlayer implements UseCase<PlayerEntity> {
-  private mapper: CreatePlayerMapper;
+  private mapper: CreatePlayerMapper = new CreatePlayerMapper();
 
-  constructor() {
-    this.mapper = new CreatePlayerMapper();
+  constructor(
+    @InjectModel('Player') private readonly playerModel: Model<PlayerEntity>,
+  ) {}
+
+  async execute(param: CreatePlayerDTO): Promise<PlayerEntity> {
+    const hasPlayer = await this.playerModel
+      .findOne({ email: param.email })
+      .exec();
+    if (!hasPlayer) return this.create(param);
   }
 
-  execute(createPlayerDTO: CreatePlayerDTO): PlayerEntity {
-    const entity = this.mapper.mapFrom(createPlayerDTO);
-    return entity;
+  private async create(param: CreatePlayerDTO): Promise<PlayerEntity> {
+    const entity = this.mapper.mapFrom(param);
+    const playerModel = new this.playerModel(entity);
+    return playerModel.save();
   }
 }
