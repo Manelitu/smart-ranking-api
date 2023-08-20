@@ -1,5 +1,5 @@
 import { UUID, randomUUID } from 'crypto';
-import { Entity } from '../../../base/model';
+import { Entity } from '@/base';
 
 export class PlayerEntity extends Entity {
   public _id: UUID;
