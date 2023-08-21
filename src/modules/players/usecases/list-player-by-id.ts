@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UseCase } from '@/base';
 import { PlayerEntity } from '@/core/entities/players.entity';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,6 +10,8 @@ export class ListPlayerById implements UseCase<PlayerEntity> {
     @InjectModel('Player') private readonly playerModel: Model<PlayerEntity>,
   ) {}
   async execute(id: string): Promise<PlayerEntity> {
+    const existPlayer = await this.playerModel.findOne({ _id: id });
+    if (!existPlayer) throw new NotFoundException('Player not found');
     return this.playerModel.findOne({ _id: id });
   }
 }

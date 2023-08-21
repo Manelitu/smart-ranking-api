@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UseCase } from '@/base';
 import { CreatePlayerDTO } from '../dtos/create-player.dto';
 import { PlayerEntity } from '@/core/entities/players.entity';
@@ -12,6 +12,8 @@ export class UpdatePlayer implements UseCase<PlayerEntity> {
   ) {}
 
   async execute(param: CreatePlayerDTO, id: string): Promise<PlayerEntity> {
+    const existPlayer = await this.playerModel.findOne({ _id: id });
+    if (!existPlayer) throw new NotFoundException('Player not found');
     return this.update(param, id);
   }
 
