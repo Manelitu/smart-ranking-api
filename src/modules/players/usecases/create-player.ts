@@ -15,8 +15,6 @@ export class CreatePlayer implements UseCase<PlayerEntity> {
   ) {}
 
   async execute(param: CreatePlayerDTO): Promise<PlayerEntity> {
-    const hasPlayer = await this.playerModel.findOne({ email: param.email });
-    if (hasPlayer) return this.update(param);
     return this.create(param);
   }
 
@@ -24,12 +22,5 @@ export class CreatePlayer implements UseCase<PlayerEntity> {
     const entity = this.mapper.mapFrom(param);
     const playerModel = new this.playerModel(entity);
     return playerModel.save();
-  }
-
-  private async update(param: CreatePlayerDTO): Promise<PlayerEntity> {
-    const filter = { email: param.email };
-    const set = { $set: param };
-    const response = this.playerModel.findOneAndUpdate(filter, set);
-    return response;
   }
 }

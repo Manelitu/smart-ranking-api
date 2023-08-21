@@ -6,6 +6,7 @@ import {
   ListPlayers,
   DeletePlayer,
   ListPlayerById,
+  UpdatePlayer,
 } from './usecases';
 import { PlayersController } from './players.controller';
 import { playerSchema } from './repositories/mongoose/schemas/players.schema';
@@ -14,6 +15,12 @@ const mongooseConfig = { name: 'Player', schema: playerSchema };
 @Module({
   imports: [MongooseModule.forFeature([mongooseConfig])],
   controllers: [PlayersController],
-  providers: [CreatePlayer, ListPlayers, ListPlayerById, DeletePlayer],
+  providers: [
+    CreatePlayer,
+    ListPlayers,
+    ListPlayerById,
+    DeletePlayer,
+    UpdatePlayer,
+  ],
 })
 export class PlayersModule {}

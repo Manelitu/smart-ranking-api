@@ -9,12 +9,13 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { CreatePlayerDTO, ListPlayersDTO } from './dtos';
-import { PlayerEntity } from '../../core/entities/players.entity';
+import { PlayerEntity } from '@/core/entities/players.entity';
 import {
   ListPlayerById,
   DeletePlayer,
   ListPlayers,
   CreatePlayer,
+  UpdatePlayer,
 } from './usecases';
 import { PlayerValidationPipe } from './pipes/player.validation.pipe';
 
@@ -22,17 +23,25 @@ import { PlayerValidationPipe } from './pipes/player.validation.pipe';
 export class PlayersController {
   constructor(
     private createPlayer: CreatePlayer,
+    private updatePlayer: UpdatePlayer,
     private listPlayers: ListPlayers,
     private deletePlayer: DeletePlayer,
     private listPlayerById: ListPlayerById,
   ) {}
 
   @Post()
-  @UsePipes(new PlayerValidationPipe())
-  async saveAndUpdate(
-    @Body() createPlayerDTO: CreatePlayerDTO,
-  ): Promise<PlayerEntity> {
+  @UsePipes(PlayerValidationPipe)
+  async save(@Body() createPlayerDTO: CreatePlayerDTO): Promise<PlayerEntity> {
     return this.createPlayer.execute(createPlayerDTO);
+  }
+
+  @Post()
+  @UsePipes(PlayerValidationPipe)
+  async update(
+    @Body() createPlayerDTO: CreatePlayerDTO,
+    @Param('id') id: string,
+  ): Promise<PlayerEntity> {
+    return this.updatePlayer.execute(createPlayerDTO, id);
   }
 
   @Get()
