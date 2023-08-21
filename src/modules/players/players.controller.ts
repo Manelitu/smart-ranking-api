@@ -7,7 +7,6 @@ import {
   Delete,
   Param,
   UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreatePlayerDTO, ListPlayersDTO } from './dtos';
 import { PlayerEntity } from '../../core/entities/players.entity';
@@ -17,6 +16,7 @@ import {
   ListPlayers,
   CreatePlayer,
 } from './usecases';
+import { PlayerValidationPipe } from './pipes/player.validation.pipe';
 
 @Controller('api/v1/players')
 export class PlayersController {
@@ -28,7 +28,7 @@ export class PlayersController {
   ) {}
 
   @Post()
-  @UsePipes(ValidationPipe)
+  @UsePipes(new PlayerValidationPipe())
   async saveAndUpdate(
     @Body() createPlayerDTO: CreatePlayerDTO,
   ): Promise<PlayerEntity> {
@@ -41,11 +41,13 @@ export class PlayersController {
   }
 
   @Get('/:id')
+  @UsePipes(new PlayerValidationPipe())
   async listById(@Param('id') id: string): Promise<PlayerEntity> {
     return this.listPlayerById.execute(id);
   }
 
   @Delete('/:id')
+  @UsePipes(new PlayerValidationPipe())
   async delete(@Param('id') id: string): Promise<PlayerEntity> {
     return this.deletePlayer.execute(id);
   }
