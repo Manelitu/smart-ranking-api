@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { CreatePlayerMapper } from '@/modules/players/mappers/create-player.mapper';
 import { UseCase } from '@/base';
 import { CreatePlayerDTO } from '../dtos/create-player.dto';
@@ -15,6 +15,7 @@ export class CreatePlayer implements UseCase<PlayerEntity> {
   ) {}
 
   async execute(param: CreatePlayerDTO): Promise<PlayerEntity> {
+    await this.checkPlayer(param);
     return this.create(param);
   }
 
@@ -22,5 +23,14 @@ export class CreatePlayer implements UseCase<PlayerEntity> {
     const entity = this.mapper.mapFrom(param);
     const playerModel = new this.playerModel(entity);
     return playerModel.save();
+  }
+
+  private async checkPlayer(param: CreatePlayerDTO): Promise<void> {
+    const [existPhone, existEmail] = await Promise.all([
+      this.playerModel.findOne({ phone: param.phone }),
+      this.playerModel.findOne({ email: param.email }),
+    ]);
+    if (existPhone) throw new ConflictException('Phone already exists');
+    if (existEmail) throw new ConflictException('Email already exists');
   }
 }
