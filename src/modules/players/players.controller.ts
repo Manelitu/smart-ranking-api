@@ -6,6 +6,8 @@ import {
   Query,
   Delete,
   Param,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreatePlayerDTO, ListPlayersDTO } from './dtos';
 import { PlayerEntity } from '../../core/entities/players.entity';
@@ -26,6 +28,7 @@ export class PlayersController {
   ) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async saveAndUpdate(
     @Body() createPlayerDTO: CreatePlayerDTO,
   ): Promise<PlayerEntity> {

@@ -1,13 +1,15 @@
-version: "3"
+version: '3.8'
 services:
   mongodb:
-    image: mongo:6-jammy
+    image: mongo:jammy
     ports:
-      - '27017:27017'
+      - 27031:27017
     env_file:
       - .env
     volumes:
       - dbdata6:/data/db
+    networks:
+      - mongo-network
 
   app:
     build: .
@@ -17,7 +19,12 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+    networks:
+      - mongo-network
 
 volumes:
-  pg-data:
   dbdata6: 
+
+networks: 
+    mongo-network:
+      driver: bridge
