@@ -9,7 +9,7 @@ import { CreateCategoryDTO } from './dtos/create-category.dto';
 import { CategoryEntity } from '@/core/entities/category.entity';
 import { CreateCategory } from './usecases/index';
 
-@Controller('categories')
+@Controller('api/v1/categories')
 export class CategoriesController {
   constructor(private readonly createCategory: CreateCategory) {}
 
