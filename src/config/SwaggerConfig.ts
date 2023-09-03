@@ -10,11 +10,8 @@ interface ConfigSwaggerParams {
 
 export function configSwagger({ app, config }: ConfigSwaggerParams) {
   const documentBuild = new DocumentBuilder()
-    .addSecurity('api-key', {
-      type: 'apiKey',
-      in: 'header',
-      name: 'X-API-KEY',
-    })
+    .setTitle('SMART RANKING API')
+    .setVersion('1.0')
     .addBearerAuth()
     .build();
 
