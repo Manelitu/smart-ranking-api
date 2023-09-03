@@ -6,7 +6,7 @@ import {
   configClassValidator,
   configGlobalFilters,
 } from './config';
-import { AllExceptionsFilter } from './core/filters/http-exception.filter';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -17,7 +17,7 @@ import {
   CreatePlayer,
   UpdatePlayer,
 } from './usecases';
-import { PlayerValidationPipe } from '@/core/pipes/player.validation.pipe';
+import { PlayerValidationPipe } from '@/common/pipes/player.validation.pipe';
 @Controller('api/v1/players')
 export class PlayersController {
   constructor(
